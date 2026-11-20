@@ -1,7 +1,7 @@
 {
   "name": "a11y-cypress-ia",
   "version": "2.0.0",
-  "description": "Motor de Quality Gate de Acessibilidade WCAG 2.2 com Cypress, BDD (Cucumber) e IA (OpenAI GPT-4o)",
+  "description": "Motor de Quality Gate de Acessibilidade WCAG 2.2 com Cypress 16.3.0, BDD (@badeball/cypress-cucumber-preprocessor) e IA (OpenAI GPT-4o)",
   "homepage": "https://github.com/AngeloFDiasGTech/a11y-cypress-ia#readme",
   "repository": {
     "type": "git",
@@ -12,17 +12,19 @@
   "type": "commonjs",
   "scripts": {
     "test:ui": "cypress open",
-    "test:headless": "cypress run"
+    "test:headless": "cypress run --browser chrome"
   },
   "devDependencies": {
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
-    "cypress": "^15.14.1",
-    "cypress-cucumber-preprocessor": "^4.3.1",
-    "esbuild": "^0.20.0",
+    "@badeball/cypress-cucumber-preprocessor": "^28.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "16.3.0",
+    "esbuild": "^0.25.0",
     "openai": "^6.48.0"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,
-    "step_definitions": "cypress/e2e/steps"
+    "stepDefinitions": [
+      "cypress/e2e/steps/**/*.{js,ts}"
+    ]
   }
 }

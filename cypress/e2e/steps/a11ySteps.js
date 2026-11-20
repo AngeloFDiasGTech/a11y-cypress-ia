@@ -1,15 +1,17 @@
 /// <reference types="cypress" />
 
-import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
+import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 let relatorioA11y = "";
 
 Given("que eu acesso a página de login da QAfé Academy", () => {
-  const targetUrl = Cypress.env("URL_DO_PR") || "/";
+  const targetUrl =
+    (typeof Cypress.expose === "function" && Cypress.expose("URL_DO_PR")) ||
+    "https://qafeally.angelofdiasg.tech";
   cy.visit(targetUrl);
 });
 
-And("os marcos estruturais e elementos essenciais de acessibilidade estão presentes", () => {
+Given("os marcos estruturais e elementos essenciais de acessibilidade estão presentes", () => {
   // Valida idioma da página (WCAG 3.1.1)
   cy.get("html").should("have.attr", "lang", "pt-BR");
 

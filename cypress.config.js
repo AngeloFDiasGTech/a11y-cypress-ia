@@ -1,19 +1,42 @@
 const { defineConfig } = require("cypress");
-const cucumber = require("cypress-cucumber-preprocessor").default;
+const createBundler = require("@bahmutov/cypress-esbuild-preprocessor");
+const {
+  addCucumberPreprocessorPlugin,
+} = require("@badeball/cypress-cucumber-preprocessor");
+const {
+  createEsbuildPlugin,
+} = require("@badeball/cypress-cucumber-preprocessor/esbuild");
 const { OpenAI } = require("openai");
 const fs = require("fs");
 const path = require("path");
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: "http://localhost:8080",
     specPattern: "**/*.feature",
     video: false,
-    setupNodeEvents(on, config) {
-      // Preprocessor do Cucumber (BDD)
-      on("file:preprocessor", cucumber());
+    async setupNodeEvents(on, config) {
+      // Expõe URL_DO_PR de forma compatível com Cypress 16+ (Cypress.expose("URL_DO_PR"))
+      config.expose = {
+        ...config.expose,
+        URL_DO_PR:
+          process.env.CYPRESS_URL_DO_PR ||
+          config.env?.URL_DO_PR ||
+          config.expose?.URL_DO_PR ||
+          "https://qafeally.angelofdiasg.tech",
+      };
 
-      // Task de Auditoria Dinâmica com IA (OpenAI GPT-4o) no backend Node.js
+      // 1. Registra o plugin oficial do Cucumber (@badeball/cypress-cucumber-preprocessor) para Cypress 16+
+      await addCucumberPreprocessorPlugin(on, config);
+
+      // 2. Configura o bundler esbuild com o plugin do Badeball Cucumber
+      on(
+        "file:preprocessor",
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
+        })
+      );
+
+      // 3. Task de Auditoria Dinâmica com IA (OpenAI GPT-4o) no backend Node.js
       on("task", {
         async auditarComOpenAI({ html, css }) {
           const apiKey = process.env.OPENAI_API_KEY || config.env.OPENAI_API_KEY;
