@@ -1,4 +1,4 @@
-﻿# 🤖 Motor de Quality Gate de Acessibilidade (`a11y-cypress-ia`) — Repositório de QA
+# 🤖 Motor de Quality Gate de Acessibilidade (`a11y-cypress-ia`) — Repositório de QA
 
 Este repositório é o **Motor Central de Auditoria Dinâmica de Acessibilidade (Shift-Left Quality Gate)** mantido pela equipe de **Engenharia de Qualidade (QA)**.
 

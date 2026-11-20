@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "a11y-cypress-ia",
   "version": "2.0.0",
   "description": "Motor de Quality Gate de Acessibilidade WCAG 2.2 com Cypress, BDD (Cucumber) e IA (OpenAI GPT-4o)",
